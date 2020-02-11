@@ -1,0 +1,690 @@
+ls()
+intersct(G2S(allGOterms$gene[allGOterms$go==topDMS.meQTL.GOterms[1]]),unique(unlist(strsplit(topDMS.meQTL.genes,';'))))
+intersect(G2S(allGOterms$gene[allGOterms$go==topDMS.meQTL.GOterms[1]]),unique(unlist(strsplit(topDMS.meQTL.genes,';'))))
+G2S
+ls()
+load("/Volumes/@home/03_Analysis/pop-genetics/archaicSNPs/aSNPs.Rdata")
+ls()
+str(nt)
+x=strsplit(nt,'_')
+chrpos=cbind(chr=sapply(x,function(y){y[1]}),pos=sapply(x,function(y){y[2]}))
+str(chrpos)
+chrpos=cbind(ID=nt,chrpos)
+d(chrpos)
+head(chrpos)
+chrpos=as.data.frame(chrpos)
+table(chrpos$chr)
+table(chrpos$pos)
+chrpos$chr=as.N(chrpos$chr)
+chrpos$chr=as.numeric(chrpos$chr)
+chrpos$pos=as.numeric(chrpos$pos)
+head(chrpos)
+write.table(chrpos,file='/Volumes/@home/03_Analysis/pop-genetics/archaicSNPs/allNeanderthalSNPs_1000G_phase3_pops_refYRI.txt',sep='\t',quote=F)
+write.table(chrpos,file='/Volumes/@home/03_Analysis/pop-genetics/archaicSNPs/allNeanderthalSNPs_1000G_phase3_pops_refYRI.txt',sep='\t',quote=F,row.names=F)
+ls()
+ls(ERCdata)
+ls(ERCFata)
+ls(ERCData)
+AFBind=read.table(sprintf('%s/Maxime/Splicing/HISAT2/SampleAFB.txt',EVO_IMMUNO_POP),header=F,sep='\t')[[1]]#
+EUBind=read.table(sprintf('%s/Maxime/Splicing/HISAT2/SampleEUB.txt',EVO_IMMUNO_POP),header=F,sep='\t')[[1]]
+SpliceNoise=read.table(file=sprintf('%s/Maxime/Splicing/NoisySplicing/NoisySpliceGene_GenomeWide_v2_coding.txt',EVO_IMMUNO_POP),sep=' ',quote='',row.names=1)#
+NonConservedSplStUsage=read.table(file=sprintf('%s/Maxime/Splicing/NoisySplicing/NoisySpliceGene_GenomeWide_v1.5_coding.txt',EVO_IMMUNO_POP),sep=' ',quote='',row.names=1)#
+NonConservedSecondarySplStUsage=read.table(file=sprintf('%s/Maxime/Splicing/NoisySplicing/NoisySpliceGene_GenomeWide_v3_coding.txt',EVO_IMMUNO_POP),sep=' ',quote='',row.names=1)#
+#
+SpliceNoiseInd=apply(SpliceNoise,2,mean,na.rm=T)#
+NonConservedSplStUsageInd=apply(NonConservedSplStUsage,2,mean,na.rm=T)#
+NonConservedSecondarySplStUsageInd=apply(NonConservedSecondarySplStUsage,2,mean,na.rm=T)#
+SpliceNoiseGene=apply(SpliceNoise,1,mean,na.rm=T)#
+NonConservedSplStUsageGene=apply(NonConservedSplStUsage,1,mean,na.rm=T)#
+NonConservedSecondarySplStUsageGene=apply(NonConservedSecondarySplStUsage,1,mean,na.rm=T)#
+#
+SpliceNoiseGeneByCond=apply(SpliceNoise,1,By,SampleAnnot$cond,mean,na.rm=T)#
+NonConservedSplStUsageGeneByCond=apply(NonConservedSplStUsage,1,By,SampleAnnot$cond,mean,na.rm=T)#
+NonConservedSecondarySplStUsageGeneByCond=apply(NonConservedSecondarySplStUsage,1,By,SampleAnnot$cond,mean,na.rm=T)
+library(data.table)
+library(data.table)#
+Junc=fread(sprintf('%s/Maxime/Splicing/NoisySplicing/AllJunctions.txt',EVO_IMMUNO_POP))
+load("/Volumes/evo_immuno_pop/Maxime/Splicing/sQTL/MatrixEQTL-cis/Perm0/Cis-sQTL_ALL_2_chr19_KW_misoPSI_response_Ens70_V2.Rdata")
+str(RESCIS)
+load("/Volumes/evo_immuno_pop/Maxime/Splicing/sQTL/MatrixEQTL-cis/Perm0/Cis-sQTL_ALL_3_chr19_KW_misoPSI_response_Ens70_V2.Rdata")
+str(RESCIS)
+load("/Volumes/evo_immuno_pop/Maxime/Splicing/sQTL/MatrixEQTL-cis/Perm0/Cis-sQTL_ALL_2_chr1_KW_misoPSI_response_Ens70_V2.Rdata")
+str(RESCIS)
+load("/Volumes/evo_immuno_pop/Maxime/Splicing/sQTL/MatrixEQTL-cis/Perm0/Cis-sQTL_ALL_4_chr18_STD_misoPSI_response_Ens70_V2.Rdata")
+str(RESCIS)
+Source='Ens70'#
+load(paste(EVO_IMMUNO_POP,'/Maxime/Splicing/MISO/aggregated/',Source,'/PSI_events_ALL_V2.Rdata',sep=''))#
+toKeep=which(PSI_Annot$JuncCovered & PSI_Annot$noOverlap & PSI_Annot$NbTestableCond>0 & PSI_Annot$Testable_NS)
+Require
+getMapInfo
+str(PSI_Annot)
+EVO_IMMUNO_POP
+EVO_IMMUNO_POP="/Volumes/evo_immuno_pop"
+str(EVO_IMMUNO_POP)
+load(paste(EVO_IMMUNO_POP,'/Maxime/Splicing/MISO/aggregated/',Source,'/PSI_events_ALL_V2.Rdata',sep=''))
+toKeep=which(PSI_Annot$JuncCovered & PSI_Annot$noOverlap & PSI_Annot$NbTestableCond>0 & PSI_Annot$Testable_NS)
+str(toKeep)
+toKeep=which(PSI_Annot$JuncCovered & PSI_Annot$noOverlap & PSI_Annot$NbTestableCond>0)
+str(toKeep)
+toKeep=which(PSI_Annot$JuncCovered & PSI_Annot$noOverlap & PSI_Annot$NbTestableCond>0 & PSI_Annot$Testable_NS)
+str(PSI_Annot)
+GeneAnnnot['ENSG00000022277',]
+GeneAnnot['ENSG00000022277',]
+Map_all=list()#
+for(i in 1:22){#
+	load(sprintf('%s/Annotation/Select/ByCHR/Map_Select_LD_chr%s.Rdata',HOME,i))#
+	Map_all[[i]]=Map#
+	}#
+Map=do.call(rbind,Map_all)#
+write.table(Map,file=sprintf('%s/Annotation/Select/Map_Select_LD_allChr.txt',HOME),sep='\t',row.names=FALSE,col.names=TRUE,quote=FALSE)
+StartConserv=fread(sprintf('%s/Maxime/Splicing/Conservation/All_SpliceSiteStartConserv_V3.txt',EVO_IMMUNO_POP))#
+EndConserv=fread(sprintf('%s/Maxime/Splicing/Conservation/All_SpliceSiteEndConserv_V3.txt',EVO_IMMUNO_POP))
+library(data.table)
+mydir='/Volumes/@home/01_scripts/data_cleaning/FACS_NORA/pipeline_projet_celltype_vs_RNAseq_2017/'#
+#
+library(pcaMethods)#
+#library(FactoMineR)#
+library(sva)#
+#
+####pbmcs#
+count_pbmcs<-read.table(sprintf("%s/count_PBMCs_mean_2016v2.txt",mydir),sep="\t",header=TRUE,stringsAsFactors=FALSE)#
+rownames(count_pbmcs)<-count_pbmcs$id#
+colnames(count_pbmcs)<-paste("NB",colnames(count_pbmcs),sep="_")#
+count_pbmcs=count_pbmcs[,-19]#
+#
+freq_pbmcs<-read.table(sprintf("%s/unique_freq_PBMCs_012015.txt",mydir),sep="\t",header=TRUE,stringsAsFactors=FALSE)#
+rownames(freq_pbmcs)<-freq_pbmcs$id#
+colnames(freq_pbmcs)<-paste("freq",colnames(freq_pbmcs),sep="_")#
+freq_pbmcs=freq_pbmcs[,-29]#
+#
+med_pbmcs<-read.table(sprintf("%s/unique_median_PBMCs_2016.txt",mydir),sep="\t",header=TRUE,stringsAsFactors=FALSE)#
+rownames(med_pbmcs)<-med_pbmcs$id#
+colnames(med_pbmcs)<-paste("MFI",colnames(med_pbmcs),sep="_")#
+colnames(med_pbmcs)=gsub('\\.','_',colnames(med_pbmcs))#
+#
+####monocytes#
+freq_monos<-read.table(sprintf("%s/unique_freq_mono_012015.txt",mydir),sep="\t",header=TRUE,stringsAsFactors=FALSE)#
+rownames(freq_monos)<-freq_monos$id#
+colnames(freq_monos)<-paste("freq",colnames(freq_monos),sep="_")#
+#
+count_monos<-read.table(sprintf("%s/count_monos_mean_2016v2.txt",mydir),sep="\t",header=TRUE,stringsAsFactors=FALSE)#
+rownames(count_monos)<-count_monos$id#
+colnames(count_monos)<-paste("NB",colnames(count_monos),sep="_")#
+#
+med_monos<-read.table(sprintf("%s/unique_median_mono_2016.txt",mydir),sep="\t",header=TRUE,stringsAsFactors=FALSE)#
+rownames(med_monos)<-med_monos$id#
+colnames(med_monos)<-paste("MFI",colnames(med_monos),sep="_")#
+colnames(med_monos)=gsub('\\.\\.','_',colnames(med_monos))#
+#
+####information cevac#
+cevaccc<-read.table(sprintf("%s/subject_repport_pca_numdate.txt",mydir),sep="\t",header=TRUE,stringsAsFactors=FALSE)#
+rownames(cevaccc)<-cevaccc$id#
+#
+####median#
+###immunoglobulin igE en ng/ml and IgD ug/ml ohter mg/ml#
+ig<-read.table(sprintf("%s/Ig_mg_ml_new.txt",mydir),sep="\t",header=TRUE,stringsAsFactors=FALSE)#
+rownames(ig)<-ig$id#
+colnames(ig)<-paste("Ac",colnames(ig),sep="_")
+cevacc<-(cevaccc[,c(1:4,7,11:18)])#
+cevacc$Age<-round(((cevacc$visit_date)-(cevacc$date_birth))/365.25,0)#
+#
+info=cevacc#
+rownames(info)<-cevacc$id#
+#
+###log transformation#
+countp<-cbind(count_pbmcs[,3],log2(count_pbmcs[,4:ncol(count_pbmcs)]+1))#
+countm<-cbind(count_monos[,2],log2(count_monos[,4:ncol(count_monos)]+1))#
+medp<-(log2(med_pbmcs[,6:ncol(med_pbmcs)]+500))#
+medm<-(log2(med_monos[,6:ncol(med_monos)]+500))#
+freqp<-((freq_pbmcs[,6:ncol(freq_pbmcs)]+1))#
+freqm<-((freq_monos[,6:ncol(freq_monos)]+1))#
+igs<-cbind((ig[,3]),(log2(ig[,5:10]+1)))#
+#
+colnames(countp)<-colnames(count_pbmcs[,c(3,4:ncol(count_pbmcs))])#
+colnames(countm)<-colnames(count_monos[,c(2,4:ncol(count_monos))])#
+colnames(medp)<-colnames(med_pbmcs[,6:ncol(med_pbmcs)])#
+colnames(medm)<-colnames(med_monos[,6:ncol(med_monos)])#
+colnames(freqp)<-colnames(freq_pbmcs[,6:ncol(freq_pbmcs)])#
+colnames(freqm)<-colnames(freq_monos[,6:ncol(freq_monos)])#
+colnames(igs)<-colnames(ig[,c(3,5:ncol(ig))])#
+#
+id_pbmcs=intersect(rownames(countp),rownames(medp))#
+id_mono=intersect(rownames(countm),rownames(medm))#
+#
+count_pcc<-na.omit((countp)[id_pbmcs,])#
+med_pcc<-na.omit((medp)[id_pbmcs,])#
+freq_pcc<-na.omit((freqp)[id_pbmcs,])#
+#
+count_mcc<-na.omit((countm)[id_mono,])#
+med_mcc<-((medm)[id_mono,])#
+freq_mcc<-((freqm)[id_mono,])#
+#
+pbmcs_rd<-merge(count_pcc, med_pcc, by=0, all=TRUE)#
+monos_rd<-merge(count_mcc, med_mcc, by=0, all=TRUE)#
+#
+rownames(pbmcs_rd)<-pbmcs_rd$Row.names#
+rownames(monos_rd)<-monos_rd$Row.names#
+pbmcs_rd2<-merge(pbmcs_rd[,-1],freq_pcc, by=0, all=TRUE)#
+monos_rd2<-merge(monos_rd[,-1],freq_mcc, by=0, all=TRUE)#
+#
+rownames(pbmcs_rd2)<-(pbmcs_rd2$Row.names)#
+rownames(monos_rd2)<-(monos_rd2$Row.names)#
+#
+####rawdata in pbmcs and monocytes and immunoglobulin#
+all_pbmc<-na.omit(merge(info,pbmcs_rd2[,-1],by=0, all=TRUE))#
+all_mono<-na.omit(merge(info,monos_rd2[,-1],by=0, all=TRUE))#
+all_igg<-na.omit(merge(info,igs,by=0, all=TRUE))
+str(count_mcc)
+min(count_mcc)
+2^(min(count_mcc))
+Image(count_monos)
+SNPs=getGenos(c('rs4714438','rs2627557','rs57146460'),phased=T)
+x=load('/Volumes/evo_immuno_pop/Matthieu/Neandertal/summaries.release/CEU.hapmap/CEU_SNPs.rda');x#
+colnames(a)=c('posID','chr','cM','pos','x5','x6','x7','x8','x9','x10','AvgProbN','x12','x13','x14','nbN','x16','x17')#
+aSNP_range=makeGRangesFromDataFrame(a[,c('chr','pos','AvgProbN','nbN')],keep.extra.columns=TRUE,ignore.strand=TRUE,start.field="pos",end.field="pos")#
+colnames(GeneConservation)[1:4]=c('seqnames','start','end','strand')#
+yall=makeGRangesFromDataFrame(GeneConservation,keep.extra.columns=TRUE) #
+oo_1=findOverlaps(aSNP_range,yall)#
+#
+MeanNeanderthalGeneEUR=By(aSNP_range$AvgProbN[queryHits(oo_1)],GeneConservation$symbol[subjectHits(oo_1)],mean,na.rm=T)#
+#
+GeneConservation=read.table(sprintf('%s/Annotation/Conservation/GeneConservation_hg37_ens70_V3.txt',HOME),sep='\t',header=TRUE)#
+Gene_LI=read.table(sprintf('%s/Annotation/Conservation/Conservation score family/fordist_cleaned_exac_r03_march16_z_pli_rec_null_data.txt',HOME),sep='\t',header=TRUE)#
+GeneConservation_Marie=read.table(sprintf('%s/Annotation/Conservation/Conservation score family/Mean_Score_Gene.txt',HOME),sep='\t',header=TRUE)#
+SNIPRE=read.table(sprintf('%s/Annotation/Conservation/Conservation score family/SNIPRE_1000G_phase1_ENSG.out',HOME),sep='\t',header=TRUE)#
+#
+GeneConservation$MeanNeanderthalCEU=MeanNeanderthalGeneEUR[match(GeneConservation$symbol,names(MeanNeanderthalGeneEUR))]#
+GeneConservation$MeanGerpRS_old=GeneConservation_Marie$MeanGerpRS[match(GeneConservation$symbol,GeneConservation_Marie$Symbol)]#
+GeneConservation$MeanPhastCons_old=GeneConservation_Marie$MeanPhastCons[match(GeneConservation$symbol,GeneConservation_Marie$Symbol)]#
+GeneConservation$MeanPhyloP_old=GeneConservation_Marie$MeanPhyloP[match(GeneConservation$symbol,GeneConservation_Marie$Symbol)]#
+GeneConservation$pLI=Gene_LI$pLI[match(GeneConservation$symbol,Gene_LI$gene)]#
+GeneConservation$pRec=Gene_LI$pRec[match(GeneConservation$symbol,Gene_LI$gene)]#
+GeneConservation$pNull=Gene_LI$pNull[match(GeneConservation$symbol,Gene_LI$gene)]#
+GeneConservation$ExacClass=ifelse(GeneConservation$pLI>0.8,'Lof Intolerant',ifelse(GeneConservation$pNull>0.8,'Neutral',ifelse(GeneConservation$pRec>0.8,'Recessive','undetermined')))#
+GeneConservation$SnIPRE.f=SNIPRE$SnIPRE.f[match(GeneConservation$gene_id,SNIPRE$Gene)] # negative selection (PN/PS) beta_N+beta_NG#
+GeneConservation$SnIPRE.gamma=SNIPRE$SnIPRE.gamma[match(GeneConservation$gene_id,SNIPRE$Gene)] # negative/positive selection	(DN/PN) beta_DN+beta_DNG#
+GeneConservation$SnIPRE.tau=SNIPRE$SnIPRE.tau[match(GeneConservation$gene_id,SNIPRE$Gene)] # divergence time (DS/DN)  beta_D+beta_DG#
+GeneConservation$SnIPRE.theta=SNIPRE$SnIPRE.theta[match(GeneConservation$gene_id,SNIPRE$Gene)] # mutability beta+beta_G#
+Require('allGOterms')
+56*15
+0.05/56*15
+0.05/56/15
+0.05*27
+sum(runif(15)<0.05)
+replicate(56,sum(runif(15)<0.05))
+sum(replicate(56,sum(runif(15)<0.05))>0)
+replicate(100,sum(replicate(56,sum(runif(15)<0.05))>0))
+hist(replicate(100,sum(replicate(56,sum(runif(15)<0.05))>0)))
+library(data.table)#
+Junc=as.data.frame(fread(sprintf('%s/Maxime/Splicing/NoisySplicing/AllJunctions_V2.txt',EVO_IMMUNO_POP)))#
+SpliceSites=fread(sprintf('%s/03_Analysis/Splicing/Papier_Splicing/NoisySplicing/Table_S4A_SpliceSites_V2.txt',HOME))#
+#
+Source='Ens70_HISAT'#
+load(paste(EVO_IMMUNO_POP,'/Maxime/Splicing/MISO/aggregated/',Source,'/PSI_events_ALL_V5_withCounts.Rdata',sep=''))#
+#
+x=strsplit(substr(PSI_Annot$event_id[toKeep],17,1000),':')#
+event_ID=rep(PSI_Annot$event_id[toKeep],sapply(x,length))#
+y=unlist(x)#
+gene=rep(sapply(x,function(x){x[1]}),sapply(x,length))#
+chr=rep(sapply(x,function(x){x[2]}),sapply(x,length))#
+strand=rep(sapply(x,function(x){x[length(x)]}),sapply(x,length))#
+#
+event_ID_junc=event_ID[grep('[0-9]+-[0-9]+',y)]#
+event_junc=y[grep('[0-9]+-[0-9]+',y)]#
+#
+Junc_MISO=data.frame(event_id=event_ID_junc,chr=chr[grep('[0-9]+-[0-9]+',y)],start=as.numeric(gsub('([0-9]+)-([0-9]+)','\\1',event_junc)),end=as.numeric(gsub('([0-9]+)-([0-9]+)','\\2',event_junc)),type=substr(event_ID_junc,17,18),strand=strand[grep('[0-9]+-[0-9]+',y)],transcript=1)#
+#mm=match(paste(Junc_MISO$chr,Junc_MISO$start,Junc_MISO$end),paste(Junc$chrom,Junc$start,Junc$end+1))#
+SEx=x[sapply(x,function(y){y[1]=='SE'})]#
+SE_junc=sapply(SEx,function(x){y=strsplit(x[3:4],'-');paste(y[[1]][1],y[[2]][2],sep='-')})#
+chr=sapply(SEx,function(x){x[2]})#
+gene=sapply(SEx,function(x){x[1]})#
+strand=sapply(SEx,function(x){x[length(x)]})#
+Junc_MISO_SE=data.frame(event_id=PSI_Annot$event_id[toKeep[sapply(x,function(y){y[1]=='SE'})]],chr=chr,start=as.numeric(gsub('([0-9]+)-([0-9]+)','\\1',SE_junc)),end=as.numeric(gsub('([0-9]+)-([0-9]+)','\\2',SE_junc)),type="SE",strand=strand,transcript=0)#
+#
+Junc_MISO=rbind(Junc_MISO,Junc_MISO_SE)#
+Junc_MISO$start_id=paste(Junc_MISO$chr,Junc_MISO$start+1,Junc_MISO$strand,ifelse(Junc_MISO$strand=='+','donor','acceptor'))#
+Junc_MISO$end_id=paste(Junc_MISO$chr,Junc_MISO$end-1,Junc_MISO$strand,ifelse(Junc_MISO$strand=='+','acceptor','donor'))#
+#
+#mm=match(paste(Junc_MISO$chr,Junc_MISO$start,Junc_MISO$end),paste(Junc$chrom,Junc$start,Junc$end+1))#
+mean(Junc_MISO$start_id%in%SpliceSites$site_id)#
+mean(Junc_MISO$end_id%in%SpliceSites$site_id)#
+SpliceSites_MISO=SpliceSites[SpliceSites$site_id%in%c(Junc_MISO$start_id,Junc_MISO$end_id)]#
+first_A3=ifelse(Junc_MISO$strand[Junc_MISO$type=='A3']=='+',sapply(strsplit(Junc_MISO$event_id[Junc_MISO$type=='A3'],':'),function(x){x[4]}),sapply(strsplit(Junc_MISO$event_id[Junc_MISO$type=='A3'],':'),function(x){x[3]}))#
+first_A5=ifelse(Junc_MISO$strand[Junc_MISO$type=='A5']=='+',sapply(strsplit(Junc_MISO$event_id[Junc_MISO$type=='A5'],':'),function(x){x[4]}),sapply(strsplit(Junc_MISO$event_id[Junc_MISO$type=='A5'],':'),function(x){x[3]}))#
+first_AF=ifelse(Junc_MISO$strand[Junc_MISO$type=='AF']=='+',sapply(strsplit(Junc_MISO$event_id[Junc_MISO$type=='AF'],':'),function(x){x[4]}),sapply(strsplit(Junc_MISO$event_id[Junc_MISO$type=='AF'],':'),function(x){x[3]}))#
+first_AL=ifelse(Junc_MISO$strand[Junc_MISO$type=='AL']=='+',sapply(strsplit(Junc_MISO$event_id[Junc_MISO$type=='AL'],':'),function(x){x[3]}),sapply(strsplit(Junc_MISO$event_id[Junc_MISO$type=='AL'],':'),function(x){x[4]}))#
+strand_A3=Junc_MISO$strand[Junc_MISO$type=='A3']=='+'#
+strand_A5=Junc_MISO$strand[Junc_MISO$type=='A5']=='+'#
+strand_AF=Junc_MISO$strand[Junc_MISO$type=='AF']=='+'#
+strand_AL=Junc_MISO$strand[Junc_MISO$type=='AL']=='+'#
+#
+junc_ID=paste(Junc_MISO[,'start'],Junc_MISO[,'end'],sep='-')#
+Junc_MISO[Junc_MISO$type=='A3','transcript']=ifelse(junc_ID[Junc_MISO$type=='A3']==first_A3,0,1)*ifelse(strand_A3,1,-1)+ifelse(strand_A3,0,1)#
+Junc_MISO[Junc_MISO$type=='A5','transcript']=ifelse(junc_ID[Junc_MISO$type=='A5']==first_A5,0,1)*ifelse(strand_A5,1,-1)+ifelse(strand_A5,0,1)#
+Junc_MISO[Junc_MISO$type=='AF','transcript']=ifelse(junc_ID[Junc_MISO$type=='AF']==first_AF,1,0)*ifelse(strand_AF,1,-1)+ifelse(strand_AF,0,1)#
+Junc_MISO[Junc_MISO$type=='AL','transcript']=ifelse(junc_ID[Junc_MISO$type=='AL']==first_AL,0,1)*ifelse(strand_AL,1,-1)+ifelse(strand_AL,0,1)#
+#
+Junc_MISO[Junc_MISO$type=='RI','transcript']=0#
+#
+Junc_MISO[Junc_MISO$type=='AL','transcript']=ifelse(junc_ID[Junc_MISO$type=='AL']==first_AL,0,1)*ifelse(strand_AL,1,-1)+ifelse(strand_AL,0,1)#
+#
+# check and update annotation for MISO MX, SE#
+Junc_MISO[Junc_MISO$type=='RI','transcript']=0#
+#
+MX_id=paste(Junc_MISO[Junc_MISO$type=='MX','start'],Junc_MISO[Junc_MISO$type=='MX','end'],sep='-')#
+MX_1=ifelse(Junc_MISO$strand[Junc_MISO$type=='MX']=='+',sapply(strsplit(Junc_MISO$event_id[Junc_MISO$type=='MX'],':'),function(x){x[3]}),sapply(strsplit(Junc_MISO$event_id[Junc_MISO$type=='MX'],':'),function(x){x[5]}))#
+MX_2=ifelse(Junc_MISO$strand[Junc_MISO$type=='MX']=='+',sapply(strsplit(Junc_MISO$event_id[Junc_MISO$type=='MX'],':'),function(x){x[4]}),sapply(strsplit(Junc_MISO$event_id[Junc_MISO$type=='MX'],':'),function(x){x[6]}))#
+Junc_MISO[Junc_MISO$type=='MX','transcript']=ifelse(MX_id==MX_1 |MX_id==MX_2,1,0)#
+table(Junc_MISO$type, Junc_MISO$transcript)#
+#
+mm=match(paste(Junc_MISO$chr,Junc_MISO$start,Junc_MISO$end),paste(Junc$chrom,Junc$start,Junc$end+1))#
+Junc_MISO$GerpRS_start=(Junc$GerpRS_start[mm]+Junc$GerpRS_start2[mm])/2#
+Junc_MISO$GerpRS_end=(Junc$GerpRS_end[mm]+Junc$GerpRS_end2[mm])/2#
+Junc_MISO$Coverage=Junc$Total_count[mm]#
+Junc_MISO$Coverage_NS=Junc$Total_count_NS[mm]#
+Junc_MISO$Coverage_LPS=Junc$Total_count_LPS[mm]#
+Junc_MISO$Coverage_PAM3=Junc$Total_count_PAM3[mm]#
+Junc_MISO$Coverage_R848=Junc$Total_count_R848[mm]#
+Junc_MISO$Coverage_IAV=Junc$Total_count_IAV[mm]#
+#
+SpliceSite_MISO_start=data.frame(site_id=Junc_MISO$start_id,event_id=Junc_MISO$event_id,Gerp_site=Junc_MISO$GerpRS_start,transcript=Junc_MISO$transcript,strand=Junc_MISO$strand,type=ifelse(Junc_MISO$strand=='+','donor','acceptor'),event_type=Junc_MISO$type)#
+SpliceSite_MISO_end=data.frame(site_id=Junc_MISO$end_id,event_id=Junc_MISO$event_id,Gerp_site=Junc_MISO$GerpRS_end,transcript=Junc_MISO$transcript,strand=Junc_MISO$strand,type=ifelse(Junc_MISO$strand=='-','donor','acceptor'),event_type=Junc_MISO$type)#
+SpliceSite_MISO=rbind(SpliceSite_MISO_start,SpliceSite_MISO_end)#
+#
+Site_event_bothTranscript=By(SpliceSite_MISO$transcript,paste(SpliceSite_MISO$site_id, SpliceSite_MISO$event_id),luq)#
+SpliceSite_MISO$bothTranscript=paste(SpliceSite_MISO$site_id, SpliceSite_MISO$event_id)%in%names(Site_event_bothTranscript)[Site_event_bothTranscript==2]#
+#
+By(SpliceSite_MISO$Gerp_site,paste(SpliceSite_MISO$bothTranscript, SpliceSite_MISO$event_type),mean)#
+#
+NbNonConserv_ByEvent_transcript=By(SpliceSite_MISO$Gerp_site[!SpliceSite_MISO$bothTranscript]<2, paste(SpliceSite_MISO$event_id, SpliceSite_MISO$transcript)[!SpliceSite_MISO$bothTranscript],sum)#
+event_ByEvent_transcript=sapply(strsplit(names(NbNonConserv_ByEvent_transcript),' '),function(x){x[1]})#
+transcript_ByEvent_transcript=as.numeric(sapply(strsplit(names(NbNonConserv_ByEvent_transcript),' '),function(x){x[2]}))#
+#
+Multiplicator_nonConserv=ifelse(By(NbNonConserv_ByEvent_transcript,event_ByEvent_transcript,length)==1,By(ifelse(NbNonConserv_ByEvent_transcript>0,2*transcript_ByEvent_transcript-1,0),event_ByEvent_transcript,max), By(NbNonConserv_ByEvent_transcript,event_ByEvent_transcript,function(x){ifelse(x[2]==0 & x[1]>0,-1,ifelse(x[1]==0 & x[2]>0,1,0))}))#
+# 0 if both are conserved in the same way, 1 if incresing PSI means less conservation, -1 if decreasing PSI means less conservation)#
+#
+table(PSI_Annot$event_type[match(names(Multiplicator_nonConserv),PSI_Annot$event_id)],Multiplicator_nonConserv) # wrong
+1015+348
+815+381
+getwd()
+setwd("/Volumes/@home/02_ERC_Data") :
+)
+setwd("/Volumes/@home/02_ERC_Data")
+setwd("/Volumes/@Home/02_ERC_Data")
+g=rbinom(100,2,0.5)
+s=rnorm(100)+0.5*g
+plot(s)
+s=rnorm(100)+g
+plot(s)
+plot(g,s)
+s=rnorm(100)+2*g
+plot(g,s)
+s=rnorm(100)+3*g
+plot(g,s)
+plot(s)
+s=rnorm(1000)+3*g
+g=rbinom(1000,2,0.5)
+s=rnorm(1000)+3*g
+plot(s)
+plot(g,s)
+plot(s)
+hist(s)
+s=rnorm(1000)+4*g
+hist(s)
+plot(s)
+e=rnorm(1000)+s
+plot(e)
+plot(s,e)
+cor(s,e)
+cor(s,g)
+cor(e,g)
+cor(e,g)^2
+cor(e,s)^2
+e=rnorm(1000)+s+g
+cor(e,s)^2
+cor(e,g)^2
+cor(s,g)^2
+lm(e~s+g)
+lm(s~e+g)
+lm(s~g)
+lm(e~g)
+summary(lm(e~g))
+summary(lm(s~g))
+summary(lm(s~g+e))
+summary(lm(e~g+s))
+summary(lm(lm(e~g)$res~lm(s~g)$res)
+)
+summary(lm(lm(s~g)$res~lm(e~g)$res)
+)
+var(e)
+var(s)
+e=e/sd(e)
+e=scale(e)
+s=scale(s)
+summary(lm(lm(s~g)$res~lm(e~g)$res)
+)
+summary(lm(lm(e~g)$res~lm(s~g)$res))
+31954/36618
+Source='Ens70_HISAT'#
+load(paste(EVO_IMMUNO_POP,'/Maxime/Splicing/MISO/aggregated/',Source,'/PSI_events_ALL_V7.2_withCounts.Rdata',sep=''))#
+load(sprintf('%s/03_Analysis/Splicing/Papier_Splicing/V5/data/AdjustmentResults/PSI_adjust_all_16173_V5.Rdata',HOME))#
+#
+library(impute)#
+library(VennDiagram)#
+#
+#pdf(sprintf('%s/03_Analysis/Splicing/Papier_Splicing/MISO_cleaning/TestableGenes_PSI_MISO_V4.pdf',HOME),height=5.8,width=5.8)#
+#testable_list=sapply(1:5,function(cond){unique(PSI_Annot[intersect(toKeep,which(PSI_Annot[,paste('Testable',condIndex[cond],sep='_')])),'gene_id'])})#
+#names(testable_list)=rep('',5)#
+#VD=venn.diagram(testable_list,col=colERC[2*0:4+2],fill=colERC[2*0:4+1],filename=NULL,margin=0.05,main='TestableGenes')#
+#grid.newpage()#
+#grid.draw(VD)#
+#barplot(sapply(testable_list,length),col=colERC5,ylab='Nb Testable',las=2)#
+#for(cond in 1:5){#
+#	tab=table(PSI_Annot[intersect(toKeep,which(PSI_Annot[,paste('Testable',condIndex[cond],sep='_')])),'event_type'])#
+#	barplot(tab,col=colPSI[names(tab)],main=condIndex[cond],ylim=c(0,2000),las=2)#
+#	}#
+#dev.off()#
+#
+##################################################################
+###			Differential splicing upon Stimulation : Test	  ####
+##################################################################
+#
+PSI_cond=PSI_prov#
+PSI_Annot_cond=PSI_Annot[toKeep,]#
+rownames(PSI_cond)=PSI_Annot_cond$event_id#
+Pval=matrix(1,length(toKeep),5)#
+rownames(Pval)=rn(PSI_Annot)[toKeep]#
+for (cond in 2:5){#
+	Pval[,cond]=apply(PSI_cond,1,function(x){P=try(wilcox.test(x[grep('-1',colnames(PSI_cond))],x[grep(paste('-',cond,sep=''),colnames(PSI_cond))])$p.value);if(class(P)=='try-error'){NA}else{P}})#
+	}#
+#
+FDR=Pval#
+FDR=matrix(p.adjust(as.numeric(Pval),'fdr'),nrow(Pval),ncol(Pval))#
+#
+DELTA_PSI=matrix(0,length(toKeep),5)#
+rownames(DELTA_PSI)=rownames(PSI_Annot)[toKeep]#
+for(cond in 2:5){#
+	DELTA_PSI[,cond]=PSI_Annot[toKeep,paste('MeanPSI_',condIndex[cond],sep='')]-PSI_Annot[toKeep,paste('MeanPSI_',condIndex[1],sep='')]#
+}#
+DELTA_DIV=matrix(0,length(toKeep),5)#
+rownames(DELTA_PSI)=rownames(PSI_Annot)[toKeep]#
+for(cond in 2:5){#
+	DELTA_DIV[,cond]=abs(PSI_Annot[toKeep,paste('MeanPSI_',condIndex[cond],sep='')]-0.5)-abs(PSI_Annot[toKeep,paste('MeanPSI_',condIndex[1],sep='')]-0.5)#
+}#
+TESTABLE=as.matrix(PSI_Annot[toKeep,paste('Testable',condIndex,sep='_')])#
+SUPPORT=as.matrix(PSI_Annot[toKeep,paste('Support',condIndex,sep='_')])#
+MEANPSI=as.matrix(PSI_Annot[toKeep,paste('MeanPSI',condIndex,sep='_')])#
+PCTNA=as.matrix(PSI_Annot[toKeep,paste('PctNA',condIndex,sep='_')])#
+JUNC=as.matrix(PSI_Annot[toKeep,paste('JuncCovered',condIndex,sep='_')])#
+#
+testable_list=sapply(1:5,function(cond){unique(PSI_Annot_cond[TESTABLE[,cond],'gene_id'])})#
+testable_event_list=sapply(1:5,function(cond){unique(PSI_Annot_cond[TESTABLE[,cond],'event_id'])})#
+GeneSymbols=PSI_Annot$symbol[toKeep]#
+GeneIDs=PSI_Annot$gene_id[toKeep]#
+MeanExpr=log2(1+GeneAnnot[,c('NS_mean','LPS_mean','PAM3_mean','R848_mean','Flu_mean')])#
+luq(unlist(testable_event_list)) # 16173 events#
+luq(unlist(testable_list)) #[1] 4739 genes#
+luq(setdiff(unlist(testable_event_list[-1]),testable_event_list[[1]])) # 3367 events#
+luq(setdiff(unlist(testable_list[-1]),testable_list[[1]])) # 630 genes#
+#
+lFC=MeanExpr[,-1]-MeanExpr[,1]%o%rep(1,4)#
+MeanExpr_log=t(apply(FPKM_gene,1,By,SampleAnnot$cond,mean))#
+lFC_log=MeanExpr_log[,-1]-MeanExpr_log[,1]%o%rep(1,4)#
+lFC_event=cbind(0,lFC[match(PSI_Annot_cond[,'gene_id'],rn(lFC)),])#
+TESTABLE_1=t(sapply(TESTABLE[,1],rep,5))#
+SUPPORT_1=t(sapply(SUPPORT[,1],rep,5))#
+MEANPSI_1=t(sapply(MEANPSI[,1],rep,5))#
+PCTNA_1=t(sapply(PCTNA[,1],rep,5))#
+JUNC_1=t(sapply(JUNC[,1],rep,5))#
+#
+TESTABLE_NEW=(PCTNA_1<0.05 & PCTNA<0.05) & (SUPPORT_1>10 & SUPPORT>10) & (TESTABLE| TESTABLE_1)#
+colnames(TESTABLE_NEW)=paste('tested_DiffSplice',condIndex,sep='_')#
+SHANNON_1=apply(-MEANPSI_1*log(MEANPSI_1)-(1-MEANPSI_1)*log(1-MEANPSI_1),2,By,GeneSymbols,sum,na.rm=T)#
+SHANNON=apply(-MEANPSI*log(MEANPSI)-(1-MEANPSI)*log(1-MEANPSI),2,By,GeneSymbols,sum,na.rm=T)#
+#SHANNON_1=apply(-MEANPSI_1*log(MEANPSI_1),2,By,GeneSymbols,sum,na.rm=T)#
+#SHANNON=apply(-MEANPSI*log(MEANPSI),2,By,GeneSymbols,sum,na.rm=T)#
+DSG=apply(FDR<0.05 & abs(DELTA_PSI)>0.05 & TESTABLE_NEW,2,By,GeneSymbols,any)#
+apply(SHANNON>SHANNON_1 & DSG,2,sum,na.rm=T)/apply(DSG,2,sum,na.rm=T)#
+#      MeanPSI_NS      MeanPSI_LPS MeanPSI_PAM3CSK4     MeanPSI_R848      MeanPSI_IAV #
+#             NaN        0.7350902        0.7055556        0.7276708        0.7496218 #
+TableS2=PSI_Annot_cond[c(1:8,grep('MeanPSI', cn(PSI_Annot_cond)),grep('Support', cn(PSI_Annot_cond)),grep('coding', cn(PSI_Annot_cond)))]#
+colnames(TableS2)[grep('Support',colnames(TableS2))]=paste('gene_FPKM',condIndex,sep='_')#
+DSE=apply(FDR<0.05 & abs(DELTA_PSI)>0.05 & TESTABLE_NEW,2,ifelse,'yes','')#
+for (i in 1:5){DSE[!TESTABLE_NEW[,i],i]='n.d.'}#
+colnames(DSE)=paste('Differentially_spliced_NS-',condIndex,sep='')#
+TESTABLE_yes=apply(TESTABLE,2,ifelse,'yes','')#
+TESTABLE_NEW_yes=apply(TESTABLE_NEW,2,ifelse,'yes','')#
+colnames(TESTABLE_yes)=paste('Alternatively_spliced_',condIndex,sep='')#
+colnames(Pval)=paste('P-value_NS-',condIndex,sep='')#
+colnames(FDR)=paste('FDR_NS-',condIndex,sep='')#
+colnames(DELTA_PSI)=paste('Delta_PSI_NS-',condIndex,sep='')#
+lFC=log2(1+TableS2[,grep('gene_FPKM',cn(TableS2))])#
+lFC=lFC[,-1]-lFC[,1]%o%rep(1,4)#
+colnames(lFC)=gsub('gene_FPKM','log2FC',colnames(lFC))#
+#colnames(SHANNON)=paste('ShannonEntropy_',condIndex,sep='_')#
+TableS2=cbind(TableS2,TESTABLE_yes,Pval[,-1],FDR[,-1],DELTA_PSI[,-1],DSE[,-1],lFC,PCTNA,TESTABLE_NEW_yes)#
+TableS2$isDiffSpliced=ifelse(apply(DSE=='yes',1,any),'yes','')
+127/1464
+By
+vioPlot_byGroup
+edit(colPSI)
+load(paste(EVO_IMMUNO_POP,'/Maxime/Splicing/MISO/aggregated/',Source,'/PSI_events_ALL_V5_withCounts.Rdata',sep=''))#
+#
+Annot_IOE=list()#
+for (type in c('A3','A5','SE','MX','RI','AF','AL')){#
+	cat('\n',type)#
+	Annot_IOE[[type]]=read.table(sprintf('%s/Maxime/Splicing/MISO/hg19_ENS70/SplicingEvents_%s_strict.ioe',EVO_IMMUNO_POP,type),skip=0,header=T)#
+}#
+Annot_IOE=do.call(rbind,Annot_IOE)
+binom.test(847,433+847,0.5)
+?fread
+By
+tab=table(PSI_Annot$coding_type, gsub(' (all)', '',PSI_Annot$conserved_site_GerpRS,fixed=T), PSI_Annot$event_type)
+counts2tab
+# set the path to files that will be needed#
+Source='Ens70_HISAT'#
+allPSI_events=paste(EVO_IMMUNO_POP,'/Maxime/Splicing/MISO/aggregated/',Source,'/PSI_events_ALL_V7.2_withCounts.Rdata',sep='')#
+Adjusted_PSI_values=sprintf('%s/03_Analysis/Splicing/Papier_Splicing/V5/data/AdjustmentResults/PSI_adjust_all_16173_V5.Rdata',HOME)#
+# allGOterms#
+#
+Require('Map_imputed')#
+Require('allGOterms')#
+# load data #
+load(allPSI_events)#
+load(Adjusted_PSI_values)#
+#
+perm=0#
+thresholds=10^-c(seq(3,13),15,20,30,50)#
+RES=list()#
+for(pop in c('ALL')){#
+	for(cond in 1:5){#
+		for( CHR in 1:22){#
+		cat(pop, cond,CHR,'\n')#
+			load(paste(EVO_IMMUNO_POP,'/Maxime/Splicing/sQTL/MatrixEQTL-cis/Perm',perm,'/Cis-sQTL_',pop,'_',cond,'_chr',CHR,'_KW_misoPSI_',Source,'_V7.Rdata',sep=''))#
+			RES0=RESCIS#
+			RES0$R2=RES0$statistic^2/(RES0$statistic^2+sum(SampleAnnot$cond==cond)-2)#
+			RES[[paste(cond,pop,CHR)]]=RES0#
+		}#
+	}#
+}#
+RES=do.call(rbind,RES)#
+colnames(RES)[colnames(RES)=='gene']='event_id'#
+RESobs=RES#
+mm=match(RESobs$event_id,PSI_Annot$event_id)#
+RESobs$gene=PSI_Annot$gene_id[mm]#
+RESobs$symbol=PSI_Annot$symbol[mm]#
+RESobs$event_type=PSI_Annot$event_type[mm]#
+RESobs$toKeep=RESobs$event_id%in% PSI_Annot$event_id[toKeep]#
+rm(RES)#
+gc()#
+#
+TESTABLE=as.matrix(PSI_Annot[toKeep,paste('Testable',condIndex,sep='_')])#
+SUPPORT=as.matrix(PSI_Annot[toKeep,paste('Support',condIndex,sep='_')])#
+MEANPSI=as.matrix(PSI_Annot[toKeep,paste('MeanPSI',condIndex,sep='_')])#
+PCTNA=as.matrix(PSI_Annot[toKeep,paste('PctNA',condIndex,sep='_')])#
+JUNC=as.matrix(PSI_Annot[toKeep,paste('JuncCovered',condIndex,sep='_')])#
+#
+PSI_Annot_cond=PSI_Annot[toKeep,]#
+testable_list=sapply(1:5,function(cond){unique(PSI_Annot_cond[TESTABLE[,cond],'gene_id'])})#
+luq(unlist(testable_list))#
+#[1] 4739#
+GeneSymbols=PSI_Annot$symbol[toKeep]#
+MeanExpr=log2(1+GeneAnnot[,c("NS_mean", "LPS_mean", "PAM3_mean", "R848_mean", "Flu_mean")])#
+lFC=MeanExpr[,-1]-MeanExpr[,1]%o%rep(1,4)#
+lFC_event=cbind(0,lFC[match(PSI_Annot_cond[,'gene_id'],rownames(lFC)),])
+200*25
+library(CAR)
+library(care)
+install.packages(care)
+install.packages('care')
+library(care)
+x=rnorm(1000)
+z=rnorm(1000)+x
+y=sqrt(0.4)*x/sd(x)+sqrt(0.3)*z/sd(z)+sqrt(0.3)*rnorm(1000)
+summary(lm(y~x+z))
+y=sqrt(0.4)*x/sd(x)+sqrt(0.3)*z/sd(z)+sqrt(0.3)*rnorm(1000); summary(lm(y~x+z))
+e=rnorm(1000);y=sqrt(0.4)*x/sd(x)+sqrt(0.3)*z/sd(z)+sqrt(0.3)*e/sd(e); summary(lm(y~x+z))
+e=rnorm(1000);y=sqrt(0.4)*x/sd(x)+sqrt(0.3)*z/sd(z)+sqrt(0.3)*e/sd(e); summary(lm(y~x))
+e=rnorm(1000);y=sqrt(0.4)*x/sd(x)+sqrt(0.3)*z/sd(z)+sqrt(0.3)*e/sd(e); summary(lm(y~z))
+e=rnorm(1000);y=sqrt(0.4)*x/sd(x)+sqrt(0.3)*z/sd(z)+sqrt(0.3)*e/sd(e); summary(lm(x~z))
+z=sqrt(0.3)*x/sd(x)+sqrt(0.7)*rnorm(1000)
+y=sqrt(0.4)*x/sd(x)+sqrt(0.3)*z/sd(z)+sqrt(0.3)*rnorm(1000); summary(lm(y~x+z))
+e=rnorm(1000);y=sqrt(0.4)*x/sd(x)+sqrt(0.3)*z/sd(z)+sqrt(0.3)*e/sd(e); summary(lm(y~x+z))
+y=sqrt(0.4)*x/sd(x)+sqrt(0.3)*z/sd(z)+sqrt(0.3)*rnorm(1000); summary(lm(y~x+z));summary(lm(z~x))
+e=rnorm(1000);y=sqrt(0.4)*x/sd(x)+sqrt(0.3)*z/sd(z)+sqrt(0.3)*e/sd(e); summary(lm(y~x+z));summary(lm(z~x))
+e=rnorm(1000);y=sqrt(0.4)*x/sd(x)+sqrt(0.3)*z/sd(z)+sqrt(0.3)*e/sd(e); summary(lm(y~x+z));summary(lm(y~x))
+e=rnorm(1000);y=sqrt(0.4)*x/sd(x)+sqrt(0.3)*z/sd(z)+sqrt(0.3)*e/sd(e); summary(lm(y~x+z));summary(lm(y~z))
+e=rnorm(1000);y=sqrt(0.4)*x/sd(x)+sqrt(0.3)*z/sd(z)+sqrt(0.3)*e/sd(e); summary(lm(y~x+z));summary(lm(y~z))$r.squared
+e=rnorm(1000);y=sqrt(0.4)*x/sd(x)+sqrt(0.3)*z/sd(z)+sqrt(0.3)*e/sd(e); summary(lm(y~x+z))$r.squared;summary(lm(y~z))$r.squared;summary(lm(y~x))$r.squared
+e=rnorm(1000);y=sqrt(0.4)*x/sd(x)+sqrt(0.3)*z/sd(z)+sqrt(0.3)*e/sd(e); summary(lm(y~x+z))$r.squared;summary(lm(y~z))$r.squared;summary(lm(y~x))$r.squared;summary(lm(z~x)))$r.squared
+e=rnorm(1000);y=sqrt(0.4)*x/sd(x)+sqrt(0.3)*z/sd(z)+sqrt(0.3)*e/sd(e); summary(lm(y~x+z))$r.squared;summary(lm(y~z))$r.squared;summary(lm(y~x))$r.squared;summary(lm(z~x))$r.squared
+x=rnorm(1000)#
+z=sqrt(0.3)*x/sd(x)+sqrt(0.7)*rnorm(1000)#
+#
+e=rnorm(1000);#
+y=sqrt(0.4)*x/sd(x)+sqrt(0.3)*z/sd(z)+sqrt(0.3)*e/sd(e);#
+ summary(lm(y~x+z))$r.squared;summary(lm(y~z))$r.squared;summary(lm(y~x))$r.squared;summary(lm(z~x))$r.squared
+rho=c(cor(x,y),cor(z,y))#
+beta=lm(y~x+z)$coeff[–1]
+beta=lm(y~x+z)$coeff[–1]
+beta=lm(y~x+z)$coef[–1]
+lm(y~x+z)$coef
+lm(y~x+z)$coef[-1]
+beta=lm(y~x+z)$coef[-1]
+beta
+beta*rho
+sum(beta*rho)
+?care
+library(care)
+?care
+??care
+?care
+ls('package::care')
+ls('packages::care')
+ls('package:care')
+? carscore
+carscore(cbind(x,z), y)
+carscore(cbind(x,z), y)^2
+sum(carscore(cbind(x,z), y)^2)
+Source='Ens70_HISAT'#
+load(paste(EVO_IMMUNO_POP,'/Maxime/Splicing/MISO/aggregated/',Source,'/PSI_events_ALL_V7.2_withCounts.Rdata',sep=''))#
+load(sprintf('%s/03_Analysis/Splicing/Papier_Splicing/V5/data/AdjustmentResults/PSI_adjust_all_16173_V5.Rdata',HOME))
+0.7^2
+library(data.table)#
+library(stringr)#
+#
+isoMir=fread('/Volumes/evo_immuno_pop/Martin/miRNA/09.isomirs/data/miRNA_counts.log2RPM.GC_Batch_corrected.tsv')#
+Data=str_split_fixed(isoMir$V1,'_',11)#
+shift_5p=as.numeric(Data[,2])#
+shift_3p=as.numeric(Data[,3])#
+strand=Data[,4]#
+subs=str_match_all(isoMir$V1,'[0-9]+[ATGC]->[ATGC]')#
+#
+# all substitutions, one sub by isoMIR#
+subs=str_match_all(isoMir$V1,'([0-9]+)([ATGC])->([ATGC])')#
+#
+subs_position=unlist(sapply(subs,function(x){as.numeric(x[,2])}))#
+subs_position_3p=rep(nchar(Data[,5]),sapply(subs,nrow))-subs_position#
+#
+subs_type=unlist(sapply(subs,function(x){paste(x[,3],x[,4],sep='->')}))#
+strand_rep=rep(strand,sapply(subs,nrow))#
+shift_5P_subs=rep(shift_5p,sapply(subs,nrow))#
+shift_3P_subs=rep(shift_3p,sapply(subs,nrow))#
+#
+MIMAT=apply(as.matrix(Data[,7:11]),1,paste,collapse='',sep='_')#
+isoMir$MIMAT=MIMAT#
+isoMir_melt=melt(isoMir, c('V1','MIMAT'), variable.name='sample',value.name='RPM')#
+isoMir_SUM=isoMir_melt[,.(RPM_total=sum(2^RPM-1)),by=.(MIMAT,sample)]#
+isoMir_melt = merge(isoMir_SUM, isoMir_melt)#
+isoMir_melt[,Ratio:=(2^RPM-1)/RPM_total]#
+isoMir_melt[,mean(Ratio),by=.(V1)]#
+meanPctmiRNA_reads=isoMir_melt[,.(meanRatio=mean(Ratio)*100),by=.(V1)]#
+meanPctmiRNA_reads=meanPctmiRNA_reads[match(isoMir$V1,V1),meanRatio]#
+#
+sum(meanPctmiRNA_reads>5,na.rm=T) #1254
+samples=colnames(isoMir)[grep('AFB|EUB',colnames(isoMir))]
+getType_fraction=function(samp){#
+    RPM=2^(isoMir[,get(samp)]-1)#
+    RPM_rep=rep(RPM,sapply(subs,nrow))#
+    by(RPM_rep,subs_type,sum)#
+}#
+#
+samples=colnames(isoMir)[grep('AFB|EUB',colnames(isoMir))]#
+getPos_fraction=function(samp){#
+    RPM=2^(isoMir[,get(samp)]-1)#
+    RPM_rep=rep(RPM,sapply(subs,nrow))#
+    by(RPM_rep,subs_position,sum)#
+}#
+#
+Type_fraction=sapply(samples,getType_fraction)#
+#
+Pos_fraction=sapply(samples,getPos_fraction)
+str(Type_fraction)
+table(Type_fraction[1,1]
+)
+Type_fraction[1,1]
+Type_fraction["A->A",1]
+606/8205
+8205+606
+8811/8205*100 - 100
+606/8205*100
+606-8205
+8811/8205*100 - 100
+CARscore=fread('/Volumes/evo_immuno_pop/Martin/miRNA/20.Gene_regulation_by_miRNA/results/variance_explained_by_miRNA_CARScore/variance_explained_by_miRNA_CARScore_1_only_miRNABS.tsv')
+setwd('/Volumes/evo_immuno_pop/Maxime/miRNA_V2/scripts/12.correlation_gene_miRNAs')
+source('/Volumes/evo_immuno_pop/Maxime/miRNA_V2/scripts/12.correlation_gene_miRNAs/06.investigate_raw_correlations.R')
+a
+targets_cor=fread('/Volumes/evo_immuno_pop/Maxime/miRNA_V2/data/12.correlation_gene_miRNAs/glmnet_correlation_miRNA_geneRPKM_transcriptionAdjusted_svaAdjusted/gene_expression_glmnet_alpha0.5_allConds.tsv')
+targets_cor=fread(sprintf('%s/Maxime/miRNA_V2/data/12.correlation_gene_miRNAs/glmnet_correlation_miRNA_geneRPKM_transcriptionAdjusted_svaAdjusted/gene_expression_glmnet_alpha0.5_allConds.tsv',EVO_IMMUNO_POP))
+targets_cor
+targets_cor[1:20]
+targets_cor[1:30]
+targets_cor[grep('hsa',selected_variables)]
+unique(targets_cor[grep('hsa',selected_variables)],by=c('selected_variables','gene'))
+tab=table(unique(targets_cor[grep('hsa',selected_variables)],by=c('selected_variables','gene'))[, selected_variables])
+tab
+hist(tab)tab
+hist(tab)
+hist(sqrt(tab))
+hist(tab)
+barplot(log(tab))
+barplot(log(table(tab)))
+table(tab)
+sum(tab>1)
+sum(tab>10)
+tab[tab>10]
+sort(tab[tab>10])
+tab[chr14_miRNAs]
+chr14_miRNAs
+miRqtl_cis_annot=fread(sprintf("%s/Maxime/miRNA_V2/data/00_tables_publication/SupTable4A_mirQTLs_Annoted.tsv",EVO_IMMUNO_POP))#
+cols=c("snps",'miRNA', "daf_char_EUB","daf_char_AFB","FST_adj",'iHS_EUB','mat_strand','mat_start','mat_end','CisDist_miRNA','TSS','CisDist_TSS','RegElt','TFBS','typeDetail','Promoter.name')
+chr14_miRNAs=miRqtl_cis_annot[snps=='rs12881760',miRNA]
+tab[chr14_miRNAs]
+targets_cor[selected_variables%in% chr14_miRNAs]
+G2S(targets_cor[selected_variables%in% chr14_miRNAs,gene])
+Require(GeneAnnot)
+Require('GeneAnnot')
+G2S(targets_cor[selected_variables%in% chr14_miRNAs,gene])
+G2S('ENSG00000072736')
+chr14_cluster_targets=unique(targets,by=c('miRNA','EnsemblGeneID','GeneNames'))
+chr14_miRNAs_extended

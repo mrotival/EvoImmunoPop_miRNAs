@@ -1,0 +1,5 @@
+This directory aims only to contain functions that are usefull to do a
+miRNA based or gene based GO enrichment. The GO analysis will be done depending
+On the current data set utilised (i.e., if you are looking for which function
+does the miRNA upregulated in flu condition impact, go look in the 04.response_to_stimulation
+folder).

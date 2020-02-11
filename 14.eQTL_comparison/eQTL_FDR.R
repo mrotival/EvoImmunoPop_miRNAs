@@ -1,0 +1,22 @@
+FDR=fread('/Volumes/evo_immuno_pop/Maxime/evo_immuno_pop_QTLs/eQTL/FDR_estimates_eQTL.txt/FDR_estimates_eQTL.txt')
+
+pdf('/Volumes/evo_immuno_pop/Maxime/evo_immuno_pop_QTLs/eQTL/Nb_FP.pdf',width=5,height=5)
+par(mar=c(10,10,1,1))
+plot(-log10(FDR$pvalue),sqrt(FDR$Nb_Pos),type='l',axes=F,col=colERC5[2],ylim=sqrt(c(0,12000)),xlim=c(4,30),xlab='-log(Pvalue)',ylab='Number of genes with an eQTL')
+#axis(2,at=seq(0,100,by=20),labels=seq(0,100,by=20)^2)
+axis(2,at=sqrt(c(0,20,100,500,1000,2000,5000,10000)),labels=c(0,20,100,500,1000,2000,5000,10000),las=2)
+axis(1)
+
+plot(-log10(FDR$pvalue),sqrt(FDR$Nb_Pos),type='l',axes=F,col=colERC5[2],ylim=sqrt(c(0,12000)),xlim=c(4,30),xlab='-log(Pvalue)',ylab='Number of genes with an eQTL')
+#axis(2,at=seq(0,100,by=20),labels=seq(0,100,by=20)^2)
+axis(2,at=sqrt(c(0,20,100,500,1000,2000,5000,10000)),labels=c(0,20,100,500,1000,2000,5000,10000),las=2)
+axis(1)
+lines(-log10(FDR$pvalue),sqrt(FDR$Nb_FP),type='l',col=colERC5[1])
+
+plot(-log10(FDR$pvalue),sqrt(FDR$Nb_Pos),type='l',axes=F,col=colERC5[2],ylim=sqrt(c(0,12000)),xlim=c(4,30),xlab='-log(Pvalue)')
+#axis(2,at=seq(0,100,by=20),labels=seq(0,100,by=20)^2)
+axis(2,at=sqrt(c(0,20,100,500,1000,2000,5000,10000)),labels=c(0,20,100,500,1000,2000,5000,10000),las=2)
+axis(1)
+lines(-log10(FDR$pvalue),sqrt(FDR$Nb_FP),type='l',col=colERC5[1])
+abline(v=min(-log10(FDR$pvalue[FDR$FDR<0.05])),col='grey',lty=3)
+dev.off()
