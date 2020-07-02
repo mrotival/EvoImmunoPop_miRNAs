@@ -1,4 +1,4 @@
-# EvoImmunoPop_miRNAs
+# Human Variation in miRNAs and isomiR response to infection
 
 The present folder contains all scripts from the manuscript entitled 'Population variation of miRNAs and isomiRs and their impact on human immunity to infection'
 
