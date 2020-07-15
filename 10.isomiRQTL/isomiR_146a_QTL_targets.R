@@ -3,6 +3,9 @@
 ### impact of isomiR-QTL on miRNA switch ###
 ############################################
 
+#source /local/gensoft2/adm/etc/profile.d/modules.sh
+# module load 3.5.0
+
 targets=fread(sprintf('%s/Martin/miRNA/11.miRNA_binding_sites/results/common_isomiR_binding_sites_on_protein_coding_3primeUTR_simplified.tsv',EVO_IMMUNO_POP))
 allGenes=unique(targets$EnsemblGeneID)
 

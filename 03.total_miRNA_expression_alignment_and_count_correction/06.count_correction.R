@@ -11,6 +11,8 @@ suppressMessages(require(ggplot2))
 suppressMessages(require("sva"))
 suppressMessages(require("pcaMethods"))
 
+
+condIndex=c("NS","LPS","PAM3CSK4", "R848","IAV")
 ###############################
 ##Functions of multiple usage##
 ###############################
@@ -75,6 +77,7 @@ rpm_count_rounded = raw_miRNA_counts[1:.N]
 for (lib in libraries_inspected){
   rpm_count_rounded[, eval(lib) := round(1e6*get(eval(lib))/sum(get(eval(lib))))]
 }
+total_count_raw=melt(rpm_count_rounded)[,.(tot_raw=sum(value)),by=variable]
 
 ################
 ##Scale counts##
@@ -84,7 +87,7 @@ dds<-DESeqDataSetFromMatrix(countData=rpm_count_rounded[, mget(libraries_inspect
 dds<-estimateSizeFactors(dds)
 counts_file_norm<-as.data.table(counts(dds,normalized=TRUE))
 counts_file_norm[, miRNA_name := rpm_count_rounded$miRNA_name]
-
+total_count_norm=melt(counts_file_norm)[,.(tot_norm=sum(value)),by=variable]
 #####################
 ## Detect outliers ##
 #####################
@@ -125,14 +128,46 @@ counts_file_norm[, eval(outlier_samples):=NULL]
 all_test_var_cat = all_test_var_cat[! (library_ID %in% c(replicates_to_remove, outlier_samples))]
 all_test_var_cont = all_test_var_cont[! (library_ID %in% c(replicates_to_remove, outlier_samples))]
 
-samples = all_test_var_cont[, library_ID]
+
 
 ##########################
 ##Filter low miRNA count##
 ##########################
 mean_count<-rowMeans(counts_file_norm[, mget(samples)])
 counts_file_norm<-counts_file_norm[mean_count>1,] # around 5 reads
+total_count_norm_frequent=melt(counts_file_norm)[,.(tot_norm=sum(value)),by=variable]
 
+##############################
+## re-estimate size factors ##
+##############################
+colData_new = all_test_var_cat[, .(pop = as.factor(pop), condition = as.factor(condition))]
+
+countData=counts_file_norm[, mget(samples)]
+for (s in samples){
+  countData[, eval(s) := round(get(eval(s)))]
+}
+dds_frequent<-DESeqDataSetFromMatrix(countData=countData, colData=colData_new, design= ~ pop + condition)
+dds_frequent<-estimateSizeFactors(dds_frequent)
+
+
+total_count=merge(merge(total_count_raw,total_count_norm,by='variable'),total_count_norm_frequent,by='variable',suffix=c('','_frequent')
+total_count[,sizeFactor:=sizeFactors(dds)[match(variable,names(sizeFactors(dds)))]]
+total_count[,sizeFactor_frequent:=sizeFactors(dds_frequent)[match(variable,names(sizeFactors(dds_frequent)))]]
+total_count=merge(all_test_var_cat[, .(library_ID=library_ID,pop=pop, condition = condIndex[condition])], total_count,by.x='library_ID',by.y='variable')
+
+total_count[,tot_norm_rare:=tot_norm-tot_norm_frequent]
+fwrite(total_count,file=paste(EVO_IMMUNO_POP, "Maxime/miRNA_V2/data/03.total_miRNA_expression_alignment_and_count_correction/total_miRNA_counts_and_sizeFactors.tsv", sep=""), sep="\t")
+
+total_count=fread(paste(EVO_IMMUNO_POP, "Maxime/miRNA_V2/data/03.total_miRNA_expression_alignment_and_count_correction/total_miRNA_counts_and_sizeFactors.tsv", sep=""), sep="\t")
+total_count_melt=melt(total_count,id.vars=c('library_ID','pop','condition'))
+names(colERC5)=condIndex
+for (i in unique(total_count_melt$variable)){
+	pdf(sprintf("%s/Maxime/miRNA_V2/figures/Revisions/Total_counts/%s_perCond.pdf",EVO_IMMUNO_POP,i),width=2,height=4)
+	p <- ggplot(total_count_melt[variable==i,], aes(x=factor(condition,condIndex), y=value,fill=factor(condition,condIndex))) + geom_violin(,scale='width') + geom_boxplot(notch=T,width=.5,fill='#FFFFFF88') +ylab(i)+xlab('condition')
+	p <- p + scale_fill_manual(values=colERC5) + theme_classic() + theme(axis.text.x = element_text(angle = 45, hjust = 1)) + theme(legend.position="none")
+	print(p)
+	dev.off()
+	}
 ######################
 ## Transform counts ##
 ######################

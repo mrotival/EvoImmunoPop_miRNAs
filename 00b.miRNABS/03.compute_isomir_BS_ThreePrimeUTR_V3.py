@@ -39,7 +39,6 @@ def get_human_reference_genome():
     record_human = SeqIO.to_dict(SeqIO.parse(fasta_human_genome, "fasta"))
     return record_human
 
-
 def get_RNA_of_each_transcript_in_fasta(output_path):
     ##First we read the informations we have about transcripts
     transcripts_info = pd.read_table(

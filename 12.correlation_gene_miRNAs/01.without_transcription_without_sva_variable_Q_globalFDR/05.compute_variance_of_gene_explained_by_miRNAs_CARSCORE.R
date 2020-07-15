@@ -38,7 +38,6 @@ genes_expression = genes_expression[condition == cond_to_investigate]
 names(genes_expression)[1] = "gene"
 genes_expression[, expression := inrt(expression), by = gene]
 
-
 # intronic_expression = fread(paste(EVO_IMMUNO_POP, "Maxime/Evo_Immuno_pop_data/05_IntronicReadCounts_HTSeq/AllSamples_Intronic_Gene_count.txt", sep=""))
 # intronic_expression[, gene := substr(intron_id, 1,nchar(intron_id)-2)]
 # intronic_expression = intronic_expression[gene %in% genes_expression$gene]

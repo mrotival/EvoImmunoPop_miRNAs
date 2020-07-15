@@ -35,7 +35,7 @@ Nb_miRNAs_by_cond[,Nb_miRNA:=as.character(Nb_miRNA)]
 #print(p)
 #dev.off()
 
-pdf(sprintf('%s/Maxime/miRNA_V2/figures/12.correlation_gene_miRNAs/variableQ_globalFDR/Number_of_miRNAs_perGene.pdf',EVO_IMMUNO_POP),width=3.5,height=2.7)
+pdf(sprintf('%s/Maxime/miRNA_V2/figures/12.correlation_gene_miRNAs/variableQ_globalFDR/Number_of_miRNAs_perGene.pdf', EVO_IMMUNO_POP),width=3.5,height=2.7)
 Nb_miRNAs_by_cond[,Nb_miRNA_char:=factor(ifelse(Nb_miRNA>3,'4+',as.character(Nb_miRNA)),levels=c('0','1','2','3','4+'))]
 
 p <- ggplot(Nb_miRNAs_by_cond,aes(x= Nb_miRNA_char,fill=condition)) 
